@@ -13,7 +13,9 @@ function VHCenter(props: AlignmentLayoutProps) {
     return (
       <props.as className={
         'flex justify-center items-center' +
-        (props.className ? ' ' + props.className : '')
+        (props.className ? ' ' + props.className : '') +
+        (props.gap ? ' gap-' + props.gap : '') +
+        (props.direction === 'row' ? ' flex-row' : ' flex-col')
       }>
         {props.children}
       </props.as>
@@ -23,7 +25,9 @@ function VHCenter(props: AlignmentLayoutProps) {
     return (
       <div className={
         'flex justify-center items-center' +
-        (props.className ? ' ' + props.className : '')
+        (props.className ? ' ' + props.className : '') +
+        (props.gap ? ' gap-' + props.gap : '') +
+        (props.direction === 'row' ? ' flex-row' : ' flex-col')
       }>
         {props.children}
       </div>

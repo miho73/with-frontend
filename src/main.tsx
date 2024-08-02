@@ -2,13 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './views/App.tsx'
 import {Provider} from "react-redux";
-import rootReducer from "./modules/reducers/RootReducer.ts";
-import {configureStore} from "@reduxjs/toolkit";
+import store from "./modules/redux/RootReducer.ts";
+import initAxios from "./config/axios.config.ts";
 
-const store = configureStore({
-  reducer: rootReducer,
-  devTools: true
-});
+initAxios();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

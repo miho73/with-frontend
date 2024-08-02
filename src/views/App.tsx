@@ -4,6 +4,7 @@ import ErrorPage from "./error/ErrorPage.tsx";
 import SignIn from "./authentication/signin/signInHost.tsx";
 import AuthenticationHost from "./authentication/AuthenticationHost.tsx";
 import IndexLayout from "./layouts/IndexLayout.tsx";
+import Authenticated from "./components/frames/AuthenticationFrame.tsx";
 
 function App() {
   return (
@@ -11,10 +12,11 @@ function App() {
       <Routes>
         <Route path={'/auth'} element={<AuthenticationHost />}>
           <Route path={'signin'} element={<SignIn />}/>
+          <Route path={'*'} element={<ErrorPage />}/>
         </Route>
 
-        <Route path={'/'} element={<IndexLayout />}>
-
+        <Route element={<Authenticated />}>
+          <Route path={'/'} element={<IndexLayout />} />
         </Route>
 
         <Route path={'*'} element={<ErrorPage />}/>

@@ -1,9 +1,11 @@
+import {VHCenter} from "../layouts/Alignment.tsx";
+
 function ErrorPage() {
   return (
-    <div>
-      <h1>404</h1>
+    <VHCenter as={'main'} className={'h-screen'}>
+      <p className={'text-3xl font-light'}>404</p>
       <p>Page not found</p>
-    </div>
+    </VHCenter>
   )
 }
 
