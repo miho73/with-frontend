@@ -19,7 +19,7 @@ const PROVIDERS = {
     icon: <GoogleIcon width={25} height={25} className={'absolute left-[25px]'}/>,
     perAppClass: 'border '
   },
-  passkey: {
+  password: {
     bg: 'bg-[#6c757d] ',
     color: 'text-white ',
     icon: <PasskeyIocnWhite width={25} height={25} className={'absolute left-[25px]'}/>,

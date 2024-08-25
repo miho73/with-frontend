@@ -19,3 +19,11 @@
   font-weight: 700;
   font-style: normal;
 }
+
+header, footer {
+  box-shadow: 0 0 5px 3px #ccc;
+}
+
+footer a.current svg {
+  filter: invert(41%) sepia(76%) saturate(1701%) hue-rotate(202deg) brightness(97%) contrast(99%);
+}

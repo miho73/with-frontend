@@ -6,7 +6,7 @@ interface UserInfoStateType {
   initialized: boolean;
 
   username: string;
-  accessToken: string;
+  jwt: string;
 }
 
 const initialState: UserInfoStateType = {
@@ -14,7 +14,7 @@ const initialState: UserInfoStateType = {
   initialized: false,
 
   username: '',
-  accessToken: ''
+  jwt: ''
 }
 
 const userInfoSlice = createSlice({
@@ -24,12 +24,18 @@ const userInfoSlice = createSlice({
     signIn: (state: UserInfoStateType, action: PayloadAction<UserInfoStateType>) => {
       state.authenticated = true;
       state.username = action.payload.username;
-      state.accessToken = action.payload.accessToken;
+      state.jwt = action.payload.jwt;
     },
 
     completeInitialization: (state: UserInfoStateType, action: PayloadAction<boolean>) => {
       state.initialized = true;
       state.authenticated = action.payload;
+    },
+
+    signOut: (state: UserInfoStateType) => {
+      state.authenticated = false;
+      state.username = '';
+      state.jwt = '';
     }
   }
 });

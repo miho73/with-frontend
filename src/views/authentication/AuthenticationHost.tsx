@@ -10,7 +10,7 @@ function AuthenticationHost() {
   const searchParams = new URLSearchParams(window.location.search);
 
   useEffect(() => {
-    if(userInfo.signin) {
+    if(userInfo.authenticated) {
       if(searchParams.has('redirect')) {
         navigate(searchParams.get('redirect')!);
       }

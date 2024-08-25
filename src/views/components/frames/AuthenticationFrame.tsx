@@ -7,21 +7,26 @@ import {actions} from "../../../modules/redux/UserInfoReducer.ts";
 import axios from "axios";
 
 function confirmCookie(
-  authenticated: () => void,
-  unauthenticated: () => void
+  authenticated: (token: string) => void,
+  unauthenticated: () => void,
 ) {
-  axios.get(
-    '/api/auth/confirm-token',
-    {withCredentials: true}
+  const token = localStorage.getItem('with-authentication');
+  if (token == null) {
+    unauthenticated();
+    return;
+  }
+
+  axios.post(
+    '/api/auth/authorization',
+    {},
+    {headers: {'Authorization': `Bearer ${token}`}}
   ).then(result => {
-    if(result.status === 200 && result.data.authenticated) {
-      authenticated();
-    }
-    else {
+    if (result.data['authorized'] == true) {
+      authenticated(token);
+    } else {
       unauthenticated();
     }
-  }).catch(error => {
-    console.error(error);
+  }).catch(() => {
     unauthenticated();
   });
 }
@@ -43,8 +48,20 @@ function Authenticated() {
       }
     }
     else {
-      confirmCookie(() => {
-        dispatch(actions.completeInitialization(true));
+      confirmCookie((token: string) => {
+        axios.get('/api/user/get',
+          {headers: {'Authorization': `Bearer ${token}`}}
+        ).then(response => {
+          dispatch(actions.signIn({
+            username: response.data['username'],
+            jwt: token,
+            authenticated: true,
+            initialized: true
+          }));
+          setAuthenticated(true);
+        }).catch(() => {
+          dispatch(actions.completeInitialization(false));
+        });
       }, () => {
         dispatch(actions.completeInitialization(false));
       });
@@ -56,7 +73,7 @@ function Authenticated() {
   }
   else {
     return (
-      <VHCenter>
+      <VHCenter as={'main'} className={'h-screen'}>
         <Spinner animation={'grow'}/>
       </VHCenter>
     );

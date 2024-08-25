@@ -3,7 +3,7 @@ import { Header, Footer } from "../components/UICover.tsx";
 
 function IndexLayout() {
   return (
-    <div className={'grid grid-rows-[30px_auto_30px] h-screen'}>
+    <div className={'grid grid-rows-[60px_auto_70px] h-screen'}>
       <Header/>
       <Outlet/>
       <Footer/>
