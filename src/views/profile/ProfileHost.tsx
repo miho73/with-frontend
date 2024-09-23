@@ -1,8 +1,11 @@
+import {Stack} from "../layouts/Alignment.tsx";
+import ProfileHeader from "./ProfileHeader.tsx";
+
 function ProfileHost() {
   return (
-    <div>
-      <p>ProfileHost</p>
-    </div>
+    <Stack as={'div'}>
+      <ProfileHeader/>
+    </Stack>
   );
 }
 

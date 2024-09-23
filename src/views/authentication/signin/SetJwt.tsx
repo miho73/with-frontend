@@ -33,7 +33,7 @@ function SetJwt() {
           .then(response => {
             const user = response.data;
             dispatch(actions.signIn({
-                username: user['username'],
+                username: user['user']['uname'],
                 jwt: jwt,
                 authenticated: true,
                 initialized: true

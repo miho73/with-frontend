@@ -17,8 +17,8 @@ function Footer() {
     <footer className={
       'grid grid-cols-3 '
     }>
-      <FooterButton text={'피드'} icon={<MapIcon/>} to={'/'} location={location}/>
-      <FooterButton text={'추천'} icon={<CompassIcon/>} to={'/'} location={location}/>
+      <FooterButton text={'피드'} icon={<MapIcon/>} to={'/feed'} location={location}/>
+      <FooterButton text={'추천'} icon={<CompassIcon/>} to={'/featured'} location={location}/>
       <FooterButton text={'프로필'} icon={<ProfileIcon/>} to={'/profile'} location={location}/>
     </footer>
   );
@@ -37,7 +37,7 @@ function FooterButton(props: FooterButtonTypes) {
       to={props.to}
       className={
         'flex flex-col gap-1 justify-center items-center' +
-        (props.location === props.to ? ' current text-blue-500' : '')
+        (props.location.startsWith(props.to) ? ' current text-blue-500' : '')
       }
     >
       {props.icon}

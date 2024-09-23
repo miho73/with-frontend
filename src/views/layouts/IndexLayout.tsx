@@ -5,7 +5,9 @@ function IndexLayout() {
   return (
     <div className={'grid grid-rows-[60px_auto_70px] h-screen'}>
       <Header/>
-      <Outlet/>
+      <main className={'px-5 py-4'}>
+        <Outlet/>
+      </main>
       <Footer/>
     </div>
   )

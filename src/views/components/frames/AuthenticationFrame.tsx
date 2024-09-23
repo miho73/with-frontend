@@ -2,7 +2,6 @@ import {Outlet, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../modules/hooks/ReduxHooks.ts";
 import {useEffect, useState} from "react";
 import {VHCenter} from "../../layouts/Alignment.tsx";
-import {Spinner} from "react-bootstrap";
 import {actions} from "../../../modules/redux/UserInfoReducer.ts";
 import axios from "axios";
 
@@ -53,7 +52,7 @@ function Authenticated() {
           {headers: {'Authorization': `Bearer ${token}`}}
         ).then(response => {
           dispatch(actions.signIn({
-            username: response.data['username'],
+            username: response.data['user']['uname'],
             jwt: token,
             authenticated: true,
             initialized: true
@@ -74,7 +73,7 @@ function Authenticated() {
   else {
     return (
       <VHCenter as={'main'} className={'h-screen'}>
-        <Spinner animation={'grow'}/>
+        <p>Authenticating</p>
       </VHCenter>
     );
   }

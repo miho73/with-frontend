@@ -1,5 +1,4 @@
 import {Outlet, useNavigate } from 'react-router-dom';
-import { VHCenter } from "../layouts/Alignment.tsx";
 import {useAppSelector} from "../../modules/hooks/ReduxHooks.ts";
 import {useEffect} from "react";
 
@@ -21,9 +20,7 @@ function AuthenticationHost() {
   }, [navigate, userInfo]);
 
   return (
-    <VHCenter className={'h-screen'} as={'main'}>
-      <Outlet />
-    </VHCenter>
+    <Outlet />
   );
 }
 

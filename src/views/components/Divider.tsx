@@ -6,7 +6,7 @@ interface DividerProps {
 
 function Divider(props: DividerProps) {
   return (
-    <Stack direction={'row'} gap={2} className={'items-center'}>
+    <Stack direction={'row'} gap={2} className={'items-center w-full'}>
       <div className={'w-full border-t border-[rgba(0,0,0,10%)]'}/>
       {props.caption &&
         <>
