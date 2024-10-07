@@ -1,11 +1,23 @@
-import {FloatingLabel, FormControl} from "react-bootstrap";
+import {FloatingLabel, FormControl, FormGroup} from "react-bootstrap";
+import Feedback from "react-bootstrap/Feedback";
 
 interface TextInputProps {
   controlId?: string;
   label: string
   className?: string
   type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
-  scale?: 'sm' | 'md' | 'lg'
+  scale?: 'sm' | 'md' | 'lg',
+
+  value?: string
+  set?: (val: string) => void
+
+  invalid?: boolean
+  invalidMessage?: string,
+
+  validationFlags?: boolean[],
+  invalidMessages?: string[],
+
+  disabled?: boolean
 }
 
 function scalePreprocessor(scale: TextInputProps['scale']) {
@@ -31,40 +43,104 @@ function floatingScalePreprocessor(scale: TextInputProps['scale']) {
 }
 
 function FloatingInput(props: TextInputProps) {
-  return (
-    <FloatingLabel
-      controlId={props.controlId}
-      label={props.label}
-      className={
-        floatingScalePreprocessor(props.scale) +
-        (props.className ? props.className : '')
+  let isInvalid = false;
+  let feedbackMessage;
+  if(props.invalid) {
+    isInvalid = true;
+
+    feedbackMessage = (
+      <Feedback type={'invalid'}>
+        {props.invalidMessage}
+      </Feedback>
+    );
+  }
+  else if(props.validationFlags && props.invalidMessages) {
+    for(let i = 0; i < props.validationFlags.length; i++) {
+      if(props.validationFlags[i]) {
+        isInvalid = true;
+        feedbackMessage = (
+          <Feedback type={'invalid'}>
+            {props.invalidMessages[i]}
+          </Feedback>
+        );
+        break;
       }
-    >
+    }
+  }
+
+  return (
+    <>
+      <FloatingLabel
+        controlId={props.controlId}
+        label={props.label}
+        className={
+          floatingScalePreprocessor(props.scale) +
+          (props.className ? props.className : '')
+        }
+      >
+        <FormControl
+          type={props.type}
+          placeholder={props.label}
+          size={props.scale === 'sm' ? 'sm' : 'lg'}
+          className={
+            scalePreprocessor(props.scale) +
+            'w-full'
+          }
+          value={props.value}
+          onChange={e => props.set ? props.set(e.target.value) : null}
+          isInvalid={isInvalid}
+          disabled={props.disabled}
+        />
+      </FloatingLabel>
+      {feedbackMessage}
+    </>
+  )
+}
+
+function Input(props: TextInputProps) {
+  let isInvalid = false;
+  let feedbackMessage;
+  if(props.invalid) {
+    isInvalid = true;
+
+    feedbackMessage = (
+      <Feedback type={'invalid'}>
+        {props.invalidMessage}
+      </Feedback>
+    );
+  }
+  else if(props.validationFlags && props.invalidMessages) {
+    for(let i = 0; i < props.validationFlags.length; i++) {
+      if(props.validationFlags[i]) {
+        isInvalid = true;
+        feedbackMessage = (
+          <Feedback type={'invalid'}>
+            {props.invalidMessages[i]}
+          </Feedback>
+        );
+        break;
+      }
+    }
+  }
+
+  return (
+    <FormGroup>
       <FormControl
         type={props.type}
         placeholder={props.label}
         size={props.scale === 'sm' ? 'sm' : 'lg'}
         className={
           scalePreprocessor(props.scale) +
-          'w-full'
+          floatingScalePreprocessor(props.scale) +
+          (props.className ? props.className : '')
         }
+        value={props.value}
+        onChange={e => props.set ? props.set(e.target.value) : null}
+        isInvalid={isInvalid}
+        disabled={props.disabled}
       />
-    </FloatingLabel>
-  )
-}
-
-function Input(props: TextInputProps) {
-  return (
-    <FormControl
-      type={props.type}
-      placeholder={props.label}
-      size={props.scale === 'sm' ? 'sm' : 'lg'}
-      className={
-        scalePreprocessor(props.scale) +
-        floatingScalePreprocessor(props.scale) +
-        (props.className ? props.className : '')
-      }
-    />
+      {feedbackMessage}
+    </FormGroup>
   )
 }
 

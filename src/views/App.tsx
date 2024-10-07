@@ -17,7 +17,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {dev && <div className={'fixed bottom-0 right-0 px-3 py-2 bg-red-500 text-white'}>DEV</div>}
+      {dev && <div className={'fixed bottom-0 left-0 px-3 py-2 bg-red-500 text-white'}>DEV</div>}
       <Routes>
         <Route path={'/auth'} element={<AuthenticationHost />}>
           <Route path={'signin'} element={<SignIn />}/>

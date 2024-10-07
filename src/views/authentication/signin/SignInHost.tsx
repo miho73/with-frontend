@@ -62,6 +62,7 @@ function SignInHost() {
         {error === 'state_mismatch' && <Alert variant={'error'}>state가 일치하지 않습니다.</Alert>}
         {error === 'code_unset' && <Alert variant={'error'}>OAuth 응답이 잘못되었습니다.</Alert>}
         {error === 'google_error' && <Alert variant={'error'}>Google로 로그인할 수 없습니다.</Alert>}
+        {error === 'internal_server_error' && <Alert variant={'error'}>로그인하지 못했습니다.</Alert>}
       </Stack>
     </Grid>
   )
