@@ -16,6 +16,8 @@ import {
 } from "../../modules/formValidator.ts";
 import axios from "axios";
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
+import {useNavigate} from "react-router-dom";
+import Alert from "../components/Alert.tsx";
 
 function Signup() {
   const [name, setName] = useState<string>('');
@@ -25,6 +27,8 @@ function Signup() {
   const [email, setEmail] = useState<string>('');
   const [formStateFlag, setFormStateFlag] = useState<number>(0);
   const [working, setWorking] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   function onSexChange(e: React.ChangeEvent<HTMLInputElement>) {
     if(e.target.checked) setSex(e.target.value);
@@ -57,9 +61,7 @@ function Signup() {
       if(res.data['result'] === 'available') {
         verifyRecaptcha()
           .then(completeSignup)
-          .catch(() => {
-            setFormStateFlag(1 << 12);
-          });
+          .catch(() => whenFormInvalid(1 << 12));
       }
       else {
         const flg = checkSingle(0, false, 10);
@@ -80,7 +82,6 @@ function Signup() {
   const {executeRecaptcha} = useGoogleReCaptcha();
   async function verifyRecaptcha() {
     if(!executeRecaptcha) {
-      // TODO: implement error handling
       throw new Error('recaptcha not ready');
     }
 
@@ -95,9 +96,9 @@ function Signup() {
       id: id,
       password: password,
       recaptcha: token
-    }).then(res => {
-      //TODO: implement followings
-    }).catch(err => {
+    }).then(() => {
+      navigate('/auth/signin/password?error=signed_up');
+    }).catch(() => {
       setFormStateFlag(1 << 13);
     }).finally(() => {
       setWorking(false);
@@ -178,10 +179,10 @@ function Signup() {
         </HorizontalForm>
 
         { checkFlag(formStateFlag, 12) &&
-          <p className={'text-red-500 text-center w-full'}>reCAPTCHA 확인에 실패했습니다.</p>
+          <Alert variant={'error'}>reCAPTCHA 확인에 실패했습니다.</Alert>
         }
         { checkFlag(formStateFlag, 13) &&
-          <p className={'text-red-500 text-center w-full'}>회원가입하지 못했습니다.</p>
+          <Alert variant={'error'}>회원가입하지 못했습니다.</Alert>
         }
 
         <Stack direction={'row'} className={'w-full justify-between'} gap={2}>

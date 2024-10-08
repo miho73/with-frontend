@@ -6,6 +6,7 @@ interface ButtonProps {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
   to?: string;
 }
 
@@ -21,6 +22,7 @@ function Button(props: ButtonProps) {
         (props.className ? ' ' + props.className : '')
       }
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.children}
     </button>

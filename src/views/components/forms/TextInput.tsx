@@ -3,21 +3,22 @@ import Feedback from "react-bootstrap/Feedback";
 
 interface TextInputProps {
   controlId?: string;
-  label: string
-  className?: string
-  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
-  scale?: 'sm' | 'md' | 'lg',
+  label: string;
+  className?: string;
+  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url';
+  scale?: 'sm' | 'md' | 'lg';
 
-  value?: string
-  set?: (val: string) => void
+  value?: string;
+  set?: (val: string) => void;
+  onEnter?: () => void;
 
-  invalid?: boolean
-  invalidMessage?: string,
+  invalid?: boolean;
+  invalidMessage?: string;
 
-  validationFlags?: boolean[],
-  invalidMessages?: string[],
+  validationFlags?: boolean[];
+  invalidMessages?: string[];
 
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 function scalePreprocessor(scale: TextInputProps['scale']) {
@@ -68,6 +69,14 @@ function FloatingInput(props: TextInputProps) {
     }
   }
 
+  function onEnter(e: React.KeyboardEvent<HTMLInputElement>) {
+    if(e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      props.onEnter ? props.onEnter() : null;
+    }
+  }
+
   return (
     <>
       <FloatingLabel
@@ -90,6 +99,7 @@ function FloatingInput(props: TextInputProps) {
           onChange={e => props.set ? props.set(e.target.value) : null}
           isInvalid={isInvalid}
           disabled={props.disabled}
+          onKeyDown={onEnter}
         />
       </FloatingLabel>
       {feedbackMessage}
@@ -123,6 +133,14 @@ function Input(props: TextInputProps) {
     }
   }
 
+  function onEnter(e: React.KeyboardEvent<HTMLInputElement>) {
+    if(e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      props.onEnter ? props.onEnter() : null;
+    }
+  }
+
   return (
     <FormGroup>
       <FormControl
@@ -138,6 +156,7 @@ function Input(props: TextInputProps) {
         onChange={e => props.set ? props.set(e.target.value) : null}
         isInvalid={isInvalid}
         disabled={props.disabled}
+        onKeyDown={onEnter}
       />
       {feedbackMessage}
     </FormGroup>
